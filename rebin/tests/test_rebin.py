@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import numpy.testing as nptesting
 
-from rebin.rebin import rebin
+from rebin import rebin
 
 
 class TestRebin(unittest.TestCase):
