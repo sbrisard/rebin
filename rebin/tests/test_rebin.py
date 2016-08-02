@@ -1,29 +1,61 @@
 import unittest
 
 import numpy as np
-import numpy.testing as nptesting
+
+from numpy.testing import assert_array_almost_equal_nulp
+from numpy.testing import assert_array_equal
 
 from rebin import rebin
+
+
+def my_rebin(a, bins, func=np.mean):
+    new_shape = tuple(n // b for n, b in zip(a.shape, bins))
+    bin0, bin1 = bins
+
+    def compute_cell(i0, i1):
+        return func(a[bin0*i0:bin0*(i0+1), bin1*i1:bin1*(i1+1)])
+
+    out = np.empty(new_shape, dtype=a.dtype)
+    it = np.nditer(out, flags=['multi_index'], op_flags=['readwrite'])
+    while not it.finished:
+        it.value[...] = compute_cell(*it.multi_index)
+        it.iternext()
+    return out
 
 
 class TestRebin(unittest.TestCase):
     def setUp(self):
         np.random.seed(20160711)
 
-    def test_rebin(self):
+    def test_rebin1(self):
+        a = np.linspace(1, 24, num=24,
+                        dtype=np.float64).reshape(4, 6)
+        actual = rebin(a, (2, 3))
+        expected = np.array([[5., 8.],
+                             [17., 20.]])
+        assert_array_equal(expected, actual)
+
+    def test_rebin2(self):
+        a = np.linspace(1, 24, num=24,
+                        dtype=np.float64).reshape(4, 6)
+        actual = rebin(a, 2)
+        expected = np.array([[4.5, 6.5, 8.5],
+                             [16.5, 18.5, 20.5]])
+        assert_array_equal(expected, actual)
+
+    def test_invalid_bins(self):
+        a = np.array([[1., 2., 3.],
+                      [4., 5., 6.]])
+        with self.assertRaises(ValueError):
+            rebin(a, bins=(1, 2, 3))
+
+    def test_random(self):
         shape = (24, 18)
-        a = 2*np.random.rand(24, 18)-1
-        bin_shape = (4, 3)
-        actual = rebin(a, bin_shape)
-        n0, n1 = (i//j for i, j in zip(shape, bin_shape))
-        bin0, bin1 = bin_shape
-        expected = np.zeros((n0, n1), dtype=np.float64)
-        for i0 in range(n0):
-            for i1 in range(n1):
-                for j0 in range(bin0):
-                    for j1 in range(bin1):
-                        expected[i0, i1] += a[bin0*i0+j0, bin1*i1+j1]
-        nptesting.assert_array_equal(expected, actual)
+        bins = (4, 3)
+        a = 2*np.random.rand(*shape)-1
+        actual = rebin(a, bins, np.sum)
+        expected = my_rebin(a, bins, np.sum)
+        assert_array_almost_equal_nulp(expected, actual, nulp=3)
 
 
 if __name__ == '__main__':
