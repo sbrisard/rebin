@@ -23,11 +23,16 @@ def my_rebin(a, bins, func=np.mean):
     return out
 
 
-class TestRebin(unittest.TestCase):
-    def setUp(self):
-        np.random.seed(20160711)
+class TestInvalidParameters(unittest.TestCase):
+    def test_invalid_length_of_bins(self):
+        a = np.array([[1., 2., 3.],
+                      [4., 5., 6.]])
+        with self.assertRaises(ValueError):
+            rebin(a, bins=(1, 2, 3))
 
-    def test_rebin1(self):
+
+class TestBasic(unittest.TestCase):
+    def test1(self):
         a = np.linspace(1, 24, num=24,
                         dtype=np.float64).reshape(4, 6)
         actual = rebin(a, (2, 3))
@@ -35,7 +40,7 @@ class TestRebin(unittest.TestCase):
                              [17., 20.]])
         assert_array_equal(expected, actual)
 
-    def test_rebin2(self):
+    def test2(self):
         a = np.linspace(1, 24, num=24,
                         dtype=np.float64).reshape(4, 6)
         actual = rebin(a, 2)
@@ -43,13 +48,12 @@ class TestRebin(unittest.TestCase):
                              [16.5, 18.5, 20.5]])
         assert_array_equal(expected, actual)
 
-    def test_invalid_bins(self):
-        a = np.array([[1., 2., 3.],
-                      [4., 5., 6.]])
-        with self.assertRaises(ValueError):
-            rebin(a, bins=(1, 2, 3))
 
-    def test_random(self):
+class TestRandomData(unittest.TestCase):
+    def setUp(self):
+        np.random.seed(20160711)
+
+    def test1(self):
         shape = (24, 18)
         bins = (4, 3)
         a = 2*np.random.rand(*shape)-1
