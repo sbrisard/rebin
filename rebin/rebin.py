@@ -4,6 +4,7 @@ from numpy.lib.stride_tricks import as_strided
 
 
 def rebin(a, bins, func=np.mean):
+    a = np.asarray(a)
     dim = a.ndim
     if np.isscalar(bins):
         bins = dim*(bins,)
