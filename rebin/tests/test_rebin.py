@@ -63,14 +63,17 @@ class TestRandomData(unittest.TestCase):
     def setUp(self):
         np.random.seed(20160711)
 
-    def test1(self):
-        shape = (24, 18)
-        bins = (4, 3)
+    def do_test(self, shape, bins, func=None, nulp=1):
         a = 2*np.random.rand(*shape)-1
         actual = rebin(a, bins, np.sum)
         expected = my_rebin(a, bins, np.sum)
-        assert_array_almost_equal_nulp(expected, actual, nulp=3)
+        assert_array_almost_equal_nulp(expected, actual, nulp=nulp)
 
+    def test1(self):
+        self.do_test((24, 18), (4, 3), nulp=3)
+
+    def test2(self):
+        self.do_test((4, 6, 8), (2, 3, 4), nulp=4)
 
 if __name__ == '__main__':
     unittest.main()
