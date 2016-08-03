@@ -10,25 +10,35 @@ from rebin import rebin
 
 def my_rebin(a, bins, func=np.mean):
     new_shape = tuple(n // b for n, b in zip(a.shape, bins))
-    bin0, bin1 = bins
 
-    def compute_cell(i0, i1):
-        return func(a[bin0*i0:bin0*(i0+1), bin1*i1:bin1*(i1+1)])
+    def compute_cell(indices):
+        slices = tuple(slice(b*i, b*(i+1)) for b, i in zip(bins, indices))
+        return func(a[slices])
 
     out = np.empty(new_shape, dtype=a.dtype)
     it = np.nditer(out, flags=['multi_index'], op_flags=['readwrite'])
     while not it.finished:
-        it.value[...] = compute_cell(*it.multi_index)
+        it.value[...] = compute_cell(it.multi_index)
         it.iternext()
     return out
 
 
 class TestInvalidParameters(unittest.TestCase):
+    def setUp(self):
+        self.a = np.array([[1., 2., 3.],
+                           [4., 5., 6.]])
+
     def test_invalid_length_of_bins(self):
-        a = np.array([[1., 2., 3.],
-                      [4., 5., 6.]])
         with self.assertRaises(ValueError):
-            rebin(a, bins=(1, 2, 3))
+            rebin(self.a, bins=(1, 2, 3))
+
+    def test_bins_not_tuple_of_ints(self):
+        with self.assertRaises(ValueError):
+            rebin(self.a, bins=(2, 1.5))
+
+    def test_bins_not_int(self):
+        with self.assertRaises(ValueError):
+            rebin(self.a, bins=1.5)
 
 
 class TestBasic(unittest.TestCase):
