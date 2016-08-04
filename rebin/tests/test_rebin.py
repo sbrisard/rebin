@@ -95,5 +95,16 @@ class TestRandomInts(unittest.TestCase):
         self.do_test((4, 6, 8), (2, 3, 4))
 
 
+class TestInexactDivision(unittest.TestCase):
+    """Assert that remainding cells are discarded."""
+
+    def test1(self):
+        a = np.arange(56).reshape(7, 8)
+        actual = rebin(a, bins=(2, 3), func=np.sum)
+        expected = np.array([[30, 48],
+                             [126, 144],
+                             [222, 240]])
+        assert_array_equal(expected, actual)
+
 if __name__ == '__main__':
     unittest.main()
