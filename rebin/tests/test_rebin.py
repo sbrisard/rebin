@@ -76,5 +76,22 @@ class TestRandomFloats(unittest.TestCase):
         self.do_test((4, 6, 8), (2, 3, 4), nulp=4)
 
 
+class TestRandomInts(unittest.TestCase):
+    def setUp(self):
+        np.random.seed(20160804)
+
+    def do_test(self, shape, bins, func=None):
+        a = 2*np.random.randint(-1000, 1000, shape)
+        actual = rebin(a, bins, np.sum)
+        expected = my_rebin(a, bins, np.sum)
+        assert_array_equal(expected, actual)
+
+    def test1(self):
+        self.do_test((24, 18), (4, 3))
+
+    def test2(self):
+        self.do_test((4, 6, 8), (2, 3, 4))
+
+
 if __name__ == '__main__':
     unittest.main()
