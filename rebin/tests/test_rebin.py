@@ -59,7 +59,7 @@ class TestBasic(unittest.TestCase):
         assert_array_equal(expected, actual)
 
 
-class TestRandomData(unittest.TestCase):
+class TestRandomFloats(unittest.TestCase):
     def setUp(self):
         np.random.seed(20160711)
 
@@ -74,6 +74,7 @@ class TestRandomData(unittest.TestCase):
 
     def test2(self):
         self.do_test((4, 6, 8), (2, 3, 4), nulp=4)
+
 
 if __name__ == '__main__':
     unittest.main()
