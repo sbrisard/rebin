@@ -15,7 +15,9 @@ def my_rebin(a, bins, func=np.mean):
         slices = tuple(slice(b*i, b*(i+1)) for b, i in zip(bins, indices))
         return func(a[slices])
 
-    out = np.empty(new_shape, dtype=a.dtype)
+    # Find out what the type of the output will be
+    dummy = compute_cell(a.ndim*(0,))
+    out = np.empty(new_shape, dtype=dummy.dtype)
     it = np.nditer(out, flags=['multi_index'], op_flags=['readwrite'])
     while not it.finished:
         it.value[...] = compute_cell(it.multi_index)
