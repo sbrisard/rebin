@@ -8,6 +8,6 @@ setup(
     url='https://github.com/sbrisard/rebin',
     author='Sébastien Brisard',
     author_email='pypa-dev@googlegroups.com',
-    packages=['rebin'],
+    modules=['rebin'],
     license='BSD-3',
 )
