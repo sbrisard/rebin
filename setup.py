@@ -7,7 +7,7 @@ setup(
     description="Python/numpy implementation of IDL's rebin function.",
     url='https://github.com/sbrisard/rebin',
     author='Sébastien Brisard',
-    author_email='pypa-dev@googlegroups.com',
+    author_email='',
     modules=['rebin'],
     license='BSD-3',
 )
