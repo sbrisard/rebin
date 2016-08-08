@@ -1,4 +1,8 @@
-"""Python/NumPy implementation of IDL's rebin function.
+"""Python/NumPy implementation of IDL's [#fn1]_ rebin function.
+
+.. rubric:: Footnotes
+
+.. [#fn1] http://www.harrisgeospatial.com/docs/rebin.html
 
 """
 import numpy as np
@@ -12,7 +16,7 @@ def rebin(a, bins, func=np.mean):
     The output array results from tiling `a` and applying `func` to each
     tile. `bins` specifies the size of the tiles.
 
-    More precisely, the returned array `out` is such that
+    More precisely, the returned array `out` is such that::
 
         out[i0, i1, ...] = func(a[b0*i0:b0*(i0+1), b1*i1:b1*(i1+1), ...])
 
