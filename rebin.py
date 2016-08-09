@@ -9,7 +9,7 @@ resulting array is returned: its dimensions are the number of tiles in
 the input array.
 
 Rationale
-=========
+---------
 
 The input array, ``a`` is assumed to be *strided*. In other words, if ::
 
@@ -45,7 +45,7 @@ as follows ::
 where reduction is carried out on the fast indices.
 
 Boundary cases
-==============
+--------------
 
 When the dimensions of the input array are not integer multiples of the
 dimensions of the tiles, the remainding rows/columns are simply discarded.
