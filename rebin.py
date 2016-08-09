@@ -8,6 +8,8 @@ is applied to each tile, which is replaced by a single value. The
 resulting array is returned: its dimensions are the number of tiles in
 the input array.
 
+Rebin is released under a BSD 3-clause license.
+
 Rationale
 ---------
 
