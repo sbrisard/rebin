@@ -10,7 +10,7 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 
 
-def rebin(a, bins, func=np.mean):
+def rebin(a, bins, func=None):
     """Aggregate data from the input array `a` into rectangular bins
 
     The output array results from tiling `a` and applying `func` to each
@@ -57,6 +57,8 @@ def rebin(a, bins, func=np.mean):
     elif len(bins) != dim:
         raise ValueError('length of bins must be {} (was {})'
                          .format(dim, len(bins)))
+    if func is None:
+        func = np.mean
     for b in bins:
         if b != int(b):
             raise ValueError('bins must be an int or a tuple of ints (was {})'.
