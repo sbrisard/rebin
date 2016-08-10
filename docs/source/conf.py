@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-import sys
+import datetime
 import os
-import shlex
+
+import rebin
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -16,10 +17,20 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 project = 'rebin'
-copyright = '2016, Sébastien Brisard'
 author = 'Sébastien Brisard'
-version = '0.1'
-release = '0.1'
+
+initial_year = 2016
+today = datetime.date.today()
+current_year = today.year
+if current_year == initial_year:
+    copyright = '{}, {}. BSD-3 license.'.format(initial_year, author)
+else:
+    copyright = '2016-{}, {}. BSD-3 license.'.format(initial_year,
+                                                     current_year,
+                                                     author)
+
+version = rebin.__version__
+release = rebin.__version__
 
 language = None
 
