@@ -29,5 +29,6 @@ setup(
     author_email='',
     py_modules=['rebin'],
     license='BSD-3',
-    test_suite='setup.my_test_suite'
+    test_suite='setup.my_test_suite',
+    install_requires=['numpy'],
 )
