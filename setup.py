@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
 import re
+import unittest
 
 from setuptools import setup
+
+
+def my_test_suite():
+    """From http://stackoverflow.com/questions/17001010/.
+
+    """
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.discover('tests', pattern='test_*.py')
+    return test_suite
 
 
 with open('rebin.py', 'r') as f:
@@ -19,4 +29,5 @@ setup(
     author_email='',
     py_modules=['rebin'],
     license='BSD-3',
+    test_suite='setup.my_test_suite'
 )
