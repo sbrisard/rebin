@@ -79,6 +79,9 @@ import numpy as np
 from numpy.lib.stride_tricks import as_strided
 
 
+__version__ = '1.0'
+
+
 def rebin(a, bins, func=None):
     """Aggregate data from the input array `a` into rectangular bins
 
