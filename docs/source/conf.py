@@ -17,7 +17,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 project = 'rebin'
-author = 'Sébastien Brisard'
+author = rebin.__author__
 
 initial_year = 2016
 today = datetime.date.today()
@@ -30,7 +30,7 @@ else:
                                                     author)
 
 version = rebin.__version__
-release = rebin.__version__
+release = rebin.__release__
 
 language = None
 
@@ -57,7 +57,7 @@ htmlhelp_basename = 'rebindoc'
 latex_elements = {}
 latex_documents = [
   (master_doc, 'rebin.tex', 'Rebin Documentation',
-   'Sébastien Brisard', 'manual'),
+   author, 'manual'),
 ]
 
 man_pages = [
