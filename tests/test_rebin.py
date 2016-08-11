@@ -8,11 +8,11 @@ from numpy.testing import assert_array_equal
 from rebin import rebin
 
 
-def my_rebin(a, bins, func=np.mean):
-    new_shape = tuple(n // b for n, b in zip(a.shape, bins))
+def my_rebin(a, factor, func=np.mean):
+    new_shape = tuple(n // f for n, f in zip(a.shape, factor))
 
     def compute_cell(indices):
-        slices = tuple(slice(b*i, b*(i+1)) for b, i in zip(bins, indices))
+        slices = tuple(slice(f*i, f*(i+1)) for f, i in zip(factor, indices))
         return func(a[slices])
 
     # Find out what the type of the output will be
@@ -30,17 +30,17 @@ class TestInvalidParameters(unittest.TestCase):
         self.a = np.array([[1., 2., 3.],
                            [4., 5., 6.]])
 
-    def test_invalid_length_of_bins(self):
+    def test_invalid_length_of_factor(self):
         with self.assertRaises(ValueError):
-            rebin(self.a, bins=(1, 2, 3))
+            rebin(self.a, factor=(1, 2, 3))
 
-    def test_bins_not_tuple_of_ints(self):
+    def test_factor_not_tuple_of_ints(self):
         with self.assertRaises(ValueError):
-            rebin(self.a, bins=(2, 1.5))
+            rebin(self.a, factor=(2, 1.5))
 
-    def test_bins_not_int(self):
+    def test_factor_not_int(self):
         with self.assertRaises(ValueError):
-            rebin(self.a, bins=1.5)
+            rebin(self.a, factor=1.5)
 
 
 class TestBasic(unittest.TestCase):
@@ -65,10 +65,10 @@ class TestRandomFloats(unittest.TestCase):
     def setUp(self):
         np.random.seed(20160711)
 
-    def do_test(self, shape, bins, func=None, nulp=1):
+    def do_test(self, shape, factor, func=None, nulp=1):
         a = 2*np.random.rand(*shape)-1
-        actual = rebin(a, bins, np.sum)
-        expected = my_rebin(a, bins, np.sum)
+        actual = rebin(a, factor, np.sum)
+        expected = my_rebin(a, factor, np.sum)
         assert_array_almost_equal_nulp(expected, actual, nulp=nulp)
 
     def test1(self):
@@ -82,10 +82,10 @@ class TestRandomInts(unittest.TestCase):
     def setUp(self):
         np.random.seed(20160804)
 
-    def do_test(self, shape, bins, func=None):
+    def do_test(self, shape, factor, func=None):
         a = 2*np.random.randint(-1000, 1000, shape)
-        actual = rebin(a, bins, np.sum)
-        expected = my_rebin(a, bins, np.sum)
+        actual = rebin(a, factor, np.sum)
+        expected = my_rebin(a, factor, np.sum)
         assert_array_equal(expected, actual)
 
     def test1(self):
@@ -100,7 +100,7 @@ class TestInexactDivision(unittest.TestCase):
 
     def test1(self):
         a = np.arange(56).reshape(7, 8)
-        actual = rebin(a, bins=(2, 3), func=np.sum)
+        actual = rebin(a, factor=(2, 3), func=np.sum)
         expected = np.array([[30, 48],
                              [126, 144],
                              [222, 240]])
