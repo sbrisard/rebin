@@ -1,4 +1,5 @@
-"""Python/NumPy implementation of IDL's rebin function.
+# -*- coding: utf-8 -*-
+u"""Python/NumPy implementation of IDL's rebin function.
 
 See http://www.harrisgeospatial.com/docs/rebin.html.
 
@@ -85,7 +86,7 @@ __release__ = __version__
 
 
 def rebin(a, factor, func=None):
-    """Aggregate data from the input array ``a`` into rectangular tiles.
+    u"""Aggregate data from the input array ``a`` into rectangular tiles.
 
     The output array results from tiling ``a`` and applying `func` to
     each tile. ``factor`` specifies the size of the tiles. More
