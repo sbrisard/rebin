@@ -22,7 +22,6 @@ with open('rebin.py', 'r') as f:
                             lines, re.MULTILINE).group(1)
     author = re.search(r'^__author__\s*=\s*[\'"]([^\'"]*)[\'"]',
                        lines, re.MULTILINE).group(1)
-    print(author)
 
 setup(
     name='rebin',
