@@ -34,7 +34,7 @@ setup(
     license='BSD-3',
     classifiers = ['Development Status :: 4 - Beta',
                    'Intended Audience :: Developers',
-                   'Intended Audience :: Sience/Research',
+                   'Intended Audience :: Science/Research',
                    'License :: OSI Approved :: BSD License',
                    'Operating System :: OS Independent',
                    'Topic :: Software Development :: Build Tools',
