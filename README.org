@@ -1,3 +1,0 @@
-#+TITLE: rebin
-
-A Python ([[http://www.numpy.org/][numpy]]) implementation of IDL's [[http://www.harrisgeospatial.com/docs/rebin.html][rebin]] function. See the documentations on [[http://rebin.readthedocs.io/][RTD]].
