@@ -80,7 +80,7 @@ import numpy as np
 
 from numpy.lib.stride_tricks import as_strided
 
-__author__ = u'Sébastien Brisard'
+__author__ = 'Sebastien Brisard'
 __version__ = '1.0'
 __release__ = __version__
 

@@ -23,11 +23,11 @@ initial_year = 2016
 today = datetime.date.today()
 current_year = today.year
 if current_year == initial_year:
-    copyright = u'{}, {}. BSD-3 license'.format(initial_year, author)
+    copyright = '{}, {}. BSD-3 license'.format(initial_year, author)
 else:
-    copyright = u'2016-{}, {}. BSD-3 license'.format(initial_year,
-                                                     current_year,
-                                                     author)
+    copyright = '2016-{}, {}. BSD-3 license'.format(initial_year,
+                                                    current_year,
+                                                    author)
 
 version = rebin.__version__
 release = rebin.__release__
